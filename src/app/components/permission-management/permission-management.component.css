@@ -1,0 +1,138 @@
+/*******************************************
+ * CONTAINER & TOP TOOLBAR
+ *******************************************/
+ .permission-management-container {
+  padding: 1rem;
+  max-width: 1200px;
+  margin: auto;
+  font-family: Arial, sans-serif;
+}
+
+.top-toolbar {
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+/*******************************************
+ * LAYOUT: LEFT & RIGHT COLUMNS
+ *******************************************/
+.content-layout {
+  display: flex;
+  gap: 2rem;
+}
+
+/* LEFT COLUMN: Form with role selection & checkboxes */
+.left-column {
+  flex: 1;
+  max-width: 300px;
+  border: 1px solid #ddd;
+  padding: 1rem;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+.left-column h3 {
+  margin-top: 0;
+}
+
+/*******************************************
+ * CHECKBOX LIST
+ *******************************************/
+.checkbox-list {
+  margin: 1rem 0;
+}
+
+.checkbox-item {
+  margin-bottom: 0.5rem;
+}
+
+/*******************************************
+ * RIGHT COLUMN: mat-card with table
+ *******************************************/
+.right-column {
+  flex: 2;
+}
+
+.mat-card.right-column {
+  width: 100%;
+  margin-top: 0;
+}
+
+.table-container {
+  margin-top: 1rem;
+  overflow-x: auto; /* Enables horizontal scroll if columns get wide */
+}
+
+.responsive-table {
+  width: 100%;
+  min-width: 450px;     /* Ensures columns don’t collapse on small screens */
+  border-collapse: collapse; /* or separate if you prefer a certain style */
+}
+
+.responsive-table th,
+.responsive-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  white-space: nowrap;    /* Keep columns from wrapping too aggressively */
+}
+
+.responsive-table th {
+  background-color: #f9f9f9;
+  font-weight: 600;
+}
+
+/*******************************************
+ * DIALOG BACKDROP FOR CREATE PERMISSION
+ *******************************************/
+.dialog-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.dialog-container {
+  background: #fff;
+  width: 400px;
+  padding: 1.5rem;
+  border-radius: 6px;
+  position: relative;
+}
+
+.dialog-form {
+  margin-top: 1rem;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/*******************************************
+ * MEDIA QUERIES FOR EXTRA RESPONSIVENESS
+ *******************************************/
+@media (max-width: 768px) {
+  .content-layout {
+    flex-direction: column;
+  }
+
+  .left-column,
+  .mat-card.right-column {
+    max-width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .responsive-table {
+    font-size: 0.9rem;
+  }
+}

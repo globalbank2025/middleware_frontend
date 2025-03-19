@@ -1,0 +1,19 @@
+.gl-management {
+  padding: 1rem;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+table {
+  width: 100%;
+}
+
+mat-form-field {
+  width: 300px;
+  margin-bottom: 1rem;
+}

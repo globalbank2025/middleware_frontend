@@ -1,0 +1,37 @@
+.error {
+  color: red;
+  margin-top: 1rem;
+}
+
+/* We remove horizontal scroll by allowing wrapping in cells. */
+.table-container {
+  margin-top: 1rem;
+  width: 100%;
+  overflow-x: hidden; /* No horizontal scroll */
+}
+
+/* Let the table shrink or expand as needed. */
+.full-width-table {
+  width: 100%;
+  table-layout: auto;
+}
+
+/* HEADERS: allow wrapping to avoid overlap. */
+mat-header-cell {
+  white-space: normal;
+  overflow: visible;
+  padding: 8px 16px;
+  font-weight: 600;
+}
+
+/* DATA CELLS: also allow wrapping to avoid overlap. */
+mat-cell {
+  white-space: normal;
+  overflow: visible;
+  padding: 8px 16px;
+}
+
+/* Smaller dropdown in the actions column */
+.action-dropdown {
+  width: 110px; /* Adjust as desired */
+}

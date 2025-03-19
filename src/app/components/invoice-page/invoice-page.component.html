@@ -1,0 +1,82 @@
+<div *ngIf="invoice" class="invoice-container">
+  <!-- Logo -->
+  <div class="invoice-logo">
+    <img src="assets/GB.png" alt="Bank Logo" height="60" />
+  </div>
+
+  <h2 class="title">VAT CASH SALES INVOICE</h2>
+
+  <div class="invoice-header">
+    <!-- Left: Payer Info -->
+    <div class="invoice-payer">
+      <h3>Payer Information</h3>
+      <p>
+        <strong>Name:</strong>
+        {{ invoice.customerName || 'N/A' }}
+      </p>
+      <p>
+        <strong>Account #:</strong>
+        {{ invoice.accountNumber || 'N/A' }}
+      </p>
+      <p>
+        <strong>VAT Reg. No:</strong>
+        {{ invoice.customerVatRegistrationNo || 'N/A' }}
+      </p>
+      <p>
+        <strong>TIN No:</strong>
+        {{ invoice.customerTinNo || 'N/A' }}
+      </p>
+      <p>
+        <strong>Telephone:</strong>
+        {{ invoice.customerTelephone || 'N/A' }}
+      </p>
+    </div>
+
+    <!-- Right: Bank Info -->
+    <div class="invoice-bank">
+      <h3>{{ invoice.bankInfo?.bankName }}</h3>
+      <p><strong>TIN No:</strong> {{ invoice.bankInfo?.tinNo }}</p>
+      <p><strong>VAT Reg. No:</strong> {{ invoice.bankInfo?.vatRegNo }}</p>
+      <p><strong>VAT Reg. Date:</strong> {{ invoice.bankInfo?.vatRegDate }}</p>
+      <p>{{ invoice.bankInfo?.address }}</p>
+      <p><strong>Tel:</strong> {{ invoice.bankInfo?.tel }}</p>
+    </div>
+  </div>
+
+  <!-- Payment Table -->
+  <div class="invoice-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Payment Type</th>
+          <th>Amount (ETB)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Principal Amount</td>
+          <td>{{ invoice.transferAmount | number:'1.2-2' }}</td>
+        </tr>
+        <tr>
+          <td>Service Charge</td>
+          <td>{{ invoice.serviceCharge | number:'1.2-2' }}</td>
+        </tr>
+        <tr>
+          <td>VAT on Service (15%)</td>
+          <td>{{ invoice.vatOnServiceCharge | number:'1.2-2' }}</td>
+        </tr>
+        <tr class="total-row">
+          <td><strong>Total Including VAT</strong></td>
+          <td><strong>{{ invoice.totalAmount | number:'1.2-2' }}</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Print Button -->
+  <div class="buttons-row">
+    <button mat-raised-button color="primary" (click)="printInvoice()">
+      Print / Save as PDF
+    </button>
+  </div>
+</div>

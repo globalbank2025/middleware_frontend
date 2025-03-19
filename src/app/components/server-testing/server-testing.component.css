@@ -1,0 +1,26 @@
+.mat-card {
+    margin: 16px;
+  }
+  
+  .row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 8px;
+  }
+  
+  .col {
+    margin-right: 16px;
+  }
+  
+  /* New classes for statuses */
+  .status-online {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .status-offline {
+    color: red;
+    font-weight: bold;
+  }
+  

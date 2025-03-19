@@ -1,0 +1,75 @@
+/* Overall container styling */
+.transaction-log-container {
+    margin: 8px;
+    border-radius: 4px;
+    background-color: #fff;
+  }
+  
+  /* Gradient toolbar */
+  .log-toolbar {
+    /* Provide a gradient background, adjusting to your color combo */
+    background: linear-gradient(-45deg, #3b6f50, #eaad21, #3b6f50, #eaad21);
+    color: #fff; /* text color for contrast */
+    min-height: 56px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+  }
+  
+  .toolbar-title {
+    font-size: 20px;
+    font-weight: 500;
+  }
+  
+  /* Container for search field so it can go on its own row */
+  .search-container {
+    padding: 8px;
+    display: flex;
+    justify-content: flex-end; /* Move search box to the right */
+  }
+  
+  /* Style the search field */
+  .search-field {
+    width: 300px;
+    max-width: 100%;
+  }
+  
+  /* The main table container (scrollable if columns are wide) */
+  .table-container {
+    width: 100%;
+    overflow-x: auto; /* enable horizontal scrolling if needed */
+    padding: 8px; /* add some padding around the table container */
+  }
+  
+  /* Full width table with minimum to avoid column overlap */
+  .full-width-table {
+    min-width: 900px; /* adjust as needed to prevent overlap */
+  }
+  
+  /* Table header styling */
+  .mat-header-row {
+    background-color: #f3f3f3;
+  }
+  
+  /* Let text wrap and add padding to create space between columns */
+  .mat-header-cell,
+  .mat-cell {
+    white-space: normal;      /* allow line breaks */
+    word-wrap: break-word;    /* break words if needed */
+    padding: 12px 16px;       /* top/bottom, left/right padding for spacing */
+    vertical-align: top;      /* ensure top alignment if text wraps multiple lines */
+  }
+  
+  /* Make header text bold */
+  .mat-header-cell {
+    font-weight: 600;
+  }
+  
+  /* Spacing for action buttons */
+  .action-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  

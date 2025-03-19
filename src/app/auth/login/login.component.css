@@ -1,0 +1,96 @@
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 
+  Unique, multi-color gradient that 
+  includes #3b6f50 and #eaad21 with 
+  complementary colors for a more "amazing" effect.
+*/
+.gradient-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    -45deg,
+    #3b6f50,
+    #2e5a42,
+    #eaad21,
+    #4a8b68,
+    #e5c53f,
+    #3b6f50
+  );
+  background-size: 800% 800%;
+  animation: gradientAnimation 40s ease infinite;
+  z-index: -1;
+}
+
+/* Slower, smoother, more noticeable animation */
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  20% { background-position: 50% 50%; }
+  40% { background-position: 100% 50%; }
+  60% { background-position: 50% 50%; }
+  80% { background-position: 0% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Container & Layout */
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* Logo styling */
+.auth-logo img {
+  width: 120px;
+  margin-bottom: 1rem;
+}
+
+/* Card styling */
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Full width for Material form fields */
+.full-width {
+  width: 100%;
+}
+
+/* Auth button to align full width */
+.auth-button {
+  width: 100%;
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+/* Link styling */
+.auth-actions {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+.auth-actions a {
+  color: #3b6f50;
+  font-weight: 500;
+  text-decoration: none;
+}
+.auth-actions a:hover {
+  text-decoration: underline;
+}

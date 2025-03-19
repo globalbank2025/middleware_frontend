@@ -1,0 +1,21 @@
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+/* Override the primary color with #3b6f50 */
+.mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+  background: #c4ddce !important;
+}
+
+/* Additional brand color overrides if desired */
+.mat-focus-indicator.mat-raised-button.mat-primary {
+  background-color: #3b6f50 !important;
+  color: #ffffff !important;
+}
+
+/* Make the body background a light grey to contrast with the white cards */
+body {
+  background-color: #f0f0f0;
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+

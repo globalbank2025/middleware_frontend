@@ -1,0 +1,131 @@
+<mat-card>
+  <mat-card-title>VAT Collection</mat-card-title>
+
+  <!-- Bank Info (static) -->
+  <div class="bank-info">
+    <strong>{{ bankInfo.bankName }}</strong><br />
+    <span>TIN No: {{ bankInfo.tinNo }}</span> &nbsp; | &nbsp;
+    <span>VAT Reg. No: {{ bankInfo.vatRegNo }}</span><br />
+    <span>VAT Reg. Date: {{ bankInfo.vatRegDate }}</span><br />
+    <span>{{ bankInfo.address }}</span><br />
+    <span>Tel: {{ bankInfo.tel }}</span>
+  </div>
+
+  <mat-card-content [formGroup]="vatForm">
+    <!-- ROW 1: Account Number & Service Income GL -->
+    <div class="form-row">
+      <mat-form-field class="form-field" appearance="fill">
+        <mat-label>Customer Account Number *</mat-label>
+        <input matInput formControlName="accountNumber" placeholder="Enter Account" />
+        <mat-error *ngIf="vatForm.get('accountNumber')?.hasError('required')">
+          Account number is required.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-field" appearance="fill">
+        <mat-label>Select Service Income GL *</mat-label>
+        <mat-select formControlName="serviceIncomeGl">
+          <mat-option *ngFor="let gl of serviceIncomeGlOptions" [value]="gl.glCode">
+            {{ gl.glCode }} - {{ gl.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="vatForm.get('serviceIncomeGl')?.hasError('required')">
+          Please select a Service Income GL.
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <!-- Display GL info -->
+    <div class="gl-info" *ngIf="selectedGL">
+      <small>
+        Calculation Type: {{ selectedGL.calculationType }}
+        <span *ngIf="selectedGL.calculationType === 'Rate'">
+          (Rate: {{ selectedGL.rate }}%)
+        </span>
+        <span *ngIf="selectedGL.calculationType === 'Flat'">
+          (Flat Price: {{ selectedGL.flatPrice | number:'1.2-2' }} ETB)
+        </span>
+      </small>
+    </div>
+
+    <!-- ROW 2: Customer Name & Telephone -->
+    <div class="form-row">
+      <mat-form-field class="form-field" appearance="fill">
+        <mat-label>Customer Name</mat-label>
+        <input
+          matInput
+          readonly
+          (focus)="onCustomerNameFocus()"
+          [value]="customerName"
+          placeholder="Click to fetch"
+        />
+      </mat-form-field>
+
+      <mat-form-field class="form-field" appearance="fill">
+        <mat-label>Customer Telephone</mat-label>
+        <input matInput formControlName="customerTelephone" placeholder="Optional" />
+      </mat-form-field>
+    </div>
+
+    <!-- ROW 3: Principal Amount & Customer VAT Registration No -->
+    <div class="form-row">
+      <mat-form-field class="form-field" appearance="fill">
+        <mat-label>Principal Amount (ETB) *</mat-label>
+        <input matInput type="number" formControlName="transferAmount" placeholder="0.00" />
+        <mat-error *ngIf="vatForm.get('transferAmount')?.hasError('required')">
+          Principal Amount is required.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-field" appearance="fill">
+        <mat-label>Customer VAT Registration No</mat-label>
+        <input matInput formControlName="customerVatRegistrationNo" placeholder="Optional" />
+      </mat-form-field>
+    </div>
+
+    <!-- ROW 4: Customer TIN No & Service Charge -->
+    <div class="form-row">
+      <mat-form-field class="form-field" appearance="fill">
+        <mat-label>Customer TIN No</mat-label>
+        <input matInput formControlName="customerTinNo" placeholder="Optional" />
+      </mat-form-field>
+
+      <mat-form-field class="form-field" appearance="fill">
+        <mat-label>Service Charge (ETB)</mat-label>
+        <input matInput type="number" formControlName="serviceCharge" readonly placeholder="0.00" />
+      </mat-form-field>
+    </div>
+
+    <!-- ROW 5: VAT on Service Charge & Total Amount -->
+    <div class="form-row">
+      <mat-form-field class="form-field" appearance="fill">
+        <mat-label>VAT on Service Charge (15%)</mat-label>
+        <input
+          matInput
+          type="number"
+          [value]="vatForm.get('vatOnServiceCharge')?.value | number:'1.2-2'"
+          readonly
+          placeholder="0.00"
+        />
+      </mat-form-field>
+
+      <mat-form-field class="form-field" appearance="fill">
+        <mat-label>Total Amount (ETB)</mat-label>
+        <input matInput type="number" formControlName="totalAmount" readonly placeholder="0.00" />
+      </mat-form-field>
+    </div>
+
+    <!-- Loading/Error Messages -->
+    <div *ngIf="loading" class="loading">Loading...</div>
+    <div *ngIf="errorMsg && !loading" class="result error">
+      <p>{{ errorMsg }}</p>
+    </div>
+
+    <!-- Buttons Row -->
+    <div class="buttons-row">
+      <button mat-raised-button color="accent" (click)="onValidate()">Validate</button>
+      <button mat-raised-button color="primary" (click)="onPay()" [disabled]="isPayDisabled">
+        Pay
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>

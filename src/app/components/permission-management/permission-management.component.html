@@ -1,0 +1,134 @@
+<div class="permission-management-container">
+  <h1>Permission Management</h1>
+
+  <div class="top-toolbar">
+    <button mat-flat-button color="primary" (click)="openCreatePermissionDialog()">
+      <mat-icon>add</mat-icon>
+      New Permission
+    </button>
+  </div>
+
+  <div class="content-layout">
+    <!-- Render the left form only if rolePermissionForm is defined -->
+    <ng-container *ngIf="rolePermissionForm">
+      <form [formGroup]="rolePermissionForm" class="left-column">
+        <h3>Select Role</h3>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Role</mat-label>
+          <mat-select formControlName="roleId" (selectionChange)="onRoleChange()">
+            <mat-option *ngFor="let r of roles" [value]="r.id">
+              {{ r.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="rolePermissionForm.get('roleId')?.hasError('required')">
+            Role is required.
+          </mat-error>
+        </mat-form-field>
+
+        <h4>Permissions for this Role</h4>
+        <div formArrayName="permissions" class="checkbox-list">
+          <div
+            *ngFor="let ctrl of permissionsArray?.controls; let i = index"
+            class="checkbox-item"
+          >
+            <!-- Avoid optional chaining warnings; trust i is in range or do a guard. -->
+            <mat-checkbox [formControlName]="i">
+              {{ dataSource.data[i].name }}
+            </mat-checkbox>
+          </div>
+        </div>
+
+        <button mat-raised-button color="accent" (click)="savePermissionChanges()">
+          Save Permission Changes
+        </button>
+      </form>
+    </ng-container>
+
+    <!-- RIGHT COLUMN: Put in mat-card for attractiveness -->
+<!-- RIGHT COLUMN: Enhanced styling and responsiveness -->
+<mat-card class="right-column">
+  <mat-card-header>
+    <mat-card-title>All Permissions</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <!-- Filter Field -->
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Filter Permissions</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Type to filter..." />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <!-- Table Container -->
+    <!-- Table Container -->
+<div class="table-container">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 responsive-table">
+    <!-- Permission Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Permission Name</th>
+      <td mat-cell *matCellDef="let permission">{{ permission.name }}</td>
+    </ng-container>
+
+    <!-- Description Column -->
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef>Description</th>
+      <td mat-cell *matCellDef="let permission">{{ permission.description }}</td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let permission">
+        <button mat-icon-button color="warn" (click)="deletePermission(permission)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- Header & Row Definitions -->
+    <tr mat-header-row *matHeaderRowDef="['name', 'description', 'actions']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['name', 'description', 'actions']"></tr>
+  </table>
+</div>
+
+
+    <!-- Paginator -->
+    <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
+  </mat-card-content>
+</mat-card>
+
+  </div>
+
+  <!-- CREATE PERMISSION DIALOG (overlay) -->
+  <div class="dialog-backdrop" *ngIf="showCreatePermissionDialog">
+    <div class="dialog-container">
+      <h2>Create Permission</h2>
+      <form [formGroup]="createPermissionForm" class="dialog-form">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Permission Name</mat-label>
+          <input matInput formControlName="permissionName" placeholder="e.g. VatCollection_Create" />
+          <mat-error *ngIf="createPermissionForm.get('permissionName')?.hasError('required')">
+            Permission Name is required.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="description" placeholder="What does this permission do?"></textarea>
+        </mat-form-field>
+      </form>
+
+      <div class="dialog-actions">
+        <button mat-button (click)="closeCreatePermissionDialog()">Cancel</button>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="saveCreatePermission()"
+          [disabled]="createPermissionForm.invalid"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

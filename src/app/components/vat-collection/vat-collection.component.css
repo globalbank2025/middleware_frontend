@@ -1,0 +1,159 @@
+/* Increase font size inside the fields for better readability */
+.mat-form-field-infix {
+  font-size: 1rem; /* increased from 0.85rem */
+  padding: 0.5rem 0.75rem; /* increased inner padding */
+}
+
+/* Adjust each form-field size: increased basis, min, and max widths */
+.form-field {
+  flex: 1 1 250px;    /* basis increased to 250px */
+  min-width: 250px;   /* increased from 180px */
+  max-width: 300px;   /* increased maximum width */
+}
+
+/* Center align form rows and adjust spacing */
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;          /* increased gap */
+  margin-bottom: 1rem; /* increased bottom margin */
+  justify-content: center; /* center align the fields */
+}
+
+/* Center align the buttons row as well */
+.buttons-row {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+/* Optional: center the mat-card and limit its maximum width */
+mat-card {
+  margin: 0 auto;
+  max-width: 800px; /* adjust as needed */
+}
+
+/* Existing styles (Bank info, Loading, etc.) remain unchanged */
+.bank-info {
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.loading {
+  margin-top: 1rem;
+  color: #3b6f50;
+  font-weight: bold;
+}
+
+.result {
+  margin-top: 1rem;
+  font-size: 1.1rem;
+}
+
+.success {
+  color: green;
+}
+
+.error {
+  color: red;
+}
+
+/* Invoice styling (if needed) */
+.invoice-wrapper {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+}
+.invoice-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+.invoice-payer,
+.invoice-bank {
+  width: 45%;
+}
+.invoice-payer h3,
+.invoice-bank h3 {
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid #aaa;
+}
+.invoice-details table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+.invoice-details th,
+.invoice-details td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+.invoice-details th {
+  background-color: #f2f2f2;
+}
+.total-row td {
+  font-weight: bold;
+}
+/* Optional: center the mat-card and limit its maximum width */
+mat-card {
+  margin: 1rem auto;
+  max-width: 900px; /* Adjust as needed */
+}
+
+/* Increase font size inside the fields for better readability */
+.mat-form-field-infix {
+  font-size: 1rem; /* from 0.85rem */
+  padding: 0.5rem 0.75rem; /* increased inner padding */
+}
+
+/* Each row: display flex with 2 columns */
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  justify-content: flex-start; /* or space-between, as you prefer */
+}
+
+/* Each field: about half the row’s width. Adjust min/max as needed. */
+.form-field {
+  flex: 1 1 350px;
+  min-width: 280px;
+  max-width: 400px;
+}
+
+/* Buttons row is centered horizontally */
+.buttons-row {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+/* Bank info styling */
+.bank-info {
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+/* Loading and error messages */
+.loading {
+  margin-top: 1rem;
+  color: #3b6f50;
+  font-weight: bold;
+}
+.result {
+  margin-top: 1rem;
+  font-size: 1.1rem;
+}
+.error {
+  color: red;
+}
+.success {
+  color: green;
+}

@@ -1,0 +1,17 @@
+@font-face {
+    font-family: 'Material Icons';
+    src: url('MaterialIcons-Regular.woff') format('woff2'),
+         url('MaterialIcons-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  /* Optionally define a .material-icons class if you want: */
+  .material-icons {
+    font-family: 'Material Icons' !important;
+    font-weight: normal;
+    font-style: normal;
+    display: inline-block;
+    /* further styling if needed */
+  }
+  

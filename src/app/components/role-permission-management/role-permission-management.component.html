@@ -1,0 +1,77 @@
+<div class="role-permission-container">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Role Permission Management</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <!-- Toolbar with a button to open the assignment dialog -->
+        <div class="toolbar">
+          <button mat-flat-button color="accent" (click)="openAssignDialog()">
+            <mat-icon>assignment</mat-icon>
+            <span>Assign Permissions to Role</span>
+          </button>
+        </div>
+  
+        <!-- View Section: List roles and their assigned permissions -->
+        <div class="role-permissions-view">
+          <h3>Roles & Assigned Permissions</h3>
+          <div *ngFor="let rp of rolePermissions">
+            <h4>{{ rp.role }}</h4>
+            <mat-chip-list>
+              <mat-chip
+                *ngFor="let perm of rp.permissions"
+                removable
+                (removed)="removePermission(rp.role, perm)"
+              >
+                {{ perm }}
+                <mat-icon matChipRemove>cancel</mat-icon>
+              </mat-chip>
+            </mat-chip-list>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
+  <!-- Dialog Template for Assigning Permissions to a Role -->
+  <ng-template #assignDialogTpl>
+    <h2 mat-dialog-title>Assign Permissions to Role</h2>
+    <mat-dialog-content>
+      <form [formGroup]="assignForm" class="dialog-form">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Role Name</mat-label>
+          <mat-select
+            formControlName="roleName"
+            (selectionChange)="onRoleChange()"
+          >
+            <mat-option *ngFor="let role of roles" [value]="role">
+              {{ role }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="assignForm.get('roleName')?.hasError('required')">
+            Role Name is required.
+          </mat-error>
+        </mat-form-field>
+  
+        <div class="checkbox-list">
+          <label class="checkbox-label">Select Permissions:</label>
+          <div formArrayName="permissions">
+            <div *ngFor="let ctrl of permissionsArray.controls; let i = index">
+              <!-- We only need [formControlName]="i" for a FormControl -->
+              <mat-checkbox [formControlName]="i">
+                {{ allPermissions[i].name }}
+              </mat-checkbox>
+            </div>
+          </div>
+        </div>
+      </form>
+    </mat-dialog-content>
+  
+    <mat-dialog-actions align="end">
+      <button mat-button (click)="closeAssignDialog()">Cancel</button>
+      <button mat-raised-button color="accent" (click)="saveAssignDialog()" [disabled]="assignForm.invalid">
+        Assign
+      </button>
+    </mat-dialog-actions>
+  </ng-template>
+  

@@ -1,0 +1,165 @@
+<div class="layout-container">
+  <mat-sidenav-container class="sidenav-container">
+    <!-- SIDEBAR -->
+    <mat-sidenav #sidenav class="sidebar" mode="side" opened="true">
+      <div class="logo-section">
+        <img src="assets/GB.png" alt="My Bank Logo" />
+      </div>
+
+      <mat-nav-list>
+        <!-- HOME -->
+        <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link" (click)="closeIfMobile()">
+          <mat-icon>home</mat-icon>
+          <span>Home</span>
+        </a>
+
+        <!-- REGISTER (if Admin) -->
+        <a
+          mat-list-item
+          *ngIf="(isAdmin$ | async)"
+          routerLink="/register"
+          routerLinkActive="active-link"
+          (click)="closeIfMobile()"
+        >
+          <mat-icon>person_add</mat-icon>
+          <span>Add User</span>
+        </a>
+
+        <!-- BRANCH MGMT (if Admin) -->
+        <a
+          mat-list-item
+          *ngIf="(isAdmin$ | async)"
+          routerLink="/branch-management"
+          routerLinkActive="active-link"
+          (click)="closeIfMobile()"
+        >
+          <mat-icon>domain</mat-icon>
+          <span>Branch Management</span>
+        </a>
+
+        <!-- ROLE MGMT (if Admin) -->
+        <a
+          mat-list-item
+          *ngIf="(isAdmin$ | async)"
+          routerLink="/role-management"
+          routerLinkActive="active-link"
+          (click)="closeIfMobile()"
+        >
+          <mat-icon>assignment_ind</mat-icon>
+          <span>Role Management</span>
+        </a>
+
+        <!-- GL MGMT (if Admin) -->
+        <a
+          mat-list-item
+          *ngIf="(isAdmin$ | async)"
+          routerLink="/service-income-gl-management"
+          routerLinkActive="active-link"
+          (click)="closeIfMobile()"
+        >
+          <mat-icon>bar_chart</mat-icon>
+          <span>GL Management</span>
+        </a>
+
+        <!-- Vat Sub-menu -->
+        <mat-list-item (click)="toggleVatSubmenu()">
+          <mat-icon>receipt_long</mat-icon>
+          <span>Income Vat</span>
+          <mat-icon class="submenu-arrow">
+            {{ isVatExpanded ? 'expand_less' : 'expand_more' }}
+          </mat-icon>
+        </mat-list-item>
+        <div *ngIf="isVatExpanded" class="submenu">
+          <!-- link to the collection form (Collect) -->
+          <a
+            mat-list-item
+            routerLink="/vat-collection"
+            routerLinkActive="active-link"
+            (click)="closeIfMobile()"
+          >
+            <mat-icon>receipt</mat-icon>
+            <span>Collect Vat</span>
+          </a>
+
+          <!-- link to the same list component but with PENDING status -->
+          <a mat-list-item routerLink="/vat-list/PENDING" routerLinkActive="active-link" (click)="closeIfMobile()">
+            <mat-icon>pending_actions</mat-icon>
+            <span>Pending Vat</span>
+          </a>
+
+          <!-- link for APPROVED status -->
+          <a mat-list-item routerLink="/vat-list/APPROVED" routerLinkActive="active-link" (click)="closeIfMobile()">
+            <mat-icon>check_circle</mat-icon>
+            <span>Approved Vat</span>
+          </a>
+
+          <!-- link for REJECTED status -->
+          <a mat-list-item routerLink="/vat-list/REJECTED" routerLinkActive="active-link" (click)="closeIfMobile()">
+            <mat-icon>cancel</mat-icon>
+            <span>Rejected Vat</span>
+          </a>
+          <!-- link for Transaction Log -->
+          <a mat-list-item routerLink="transaction-logs" routerLinkActive="active-link" (click)="closeIfMobile()">
+            <mat-icon>cancel</mat-icon>
+            <span>Transaction Log</span>
+          </a>
+        </div>
+
+        <!-- PERMISSION MGMT (if Admin) -->
+        <a
+        mat-list-item
+        *ngIf="(isAdmin$ | async)"
+        routerLink="/permission-management"
+        routerLinkActive="active-link"
+        (click)="closeIfMobile()"
+        >
+        <mat-icon>security</mat-icon>
+        <span>Permission Management</span>
+        </a>
+        <!-- USER LIST -->
+        <a mat-list-item routerLink="/users-list" routerLinkActive="active-link" (click)="closeIfMobile()">
+          <mat-icon>group</mat-icon>
+          <span>Users List</span>
+        </a>
+
+        <!-- SERVER TESTING -->
+        <a mat-list-item routerLink="/test-servers" routerLinkActive="active-link" (click)="closeIfMobile()">
+          <mat-icon>settings</mat-icon>
+          <span>Server Testing</span>
+        </a>
+
+        <!-- Role-Permission -->
+        <a mat-list-item routerLink="/role-permission" routerLinkActive="active-link" (click)="closeIfMobile()">
+          <mat-icon>settings</mat-icon>
+          <span>Role Permission</span>
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <!-- MAIN CONTENT -->
+    <mat-sidenav-content>
+      <!-- HEADER TOOLBAR -->
+      <mat-toolbar class="header-toolbar">
+        <button mat-icon-button (click)="sidenav.toggle()" class="menu-button">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <span class="header-title">Global Bank Portal</span>
+        <span class="flex-spacer"></span>
+        <button mat-button (click)="logout()">
+          <mat-icon>exit_to_app</mat-icon>
+          Logout
+        </button>
+      </mat-toolbar>
+
+      <!-- CONTENT -->
+      <div class="layout-content">
+        <router-outlet></router-outlet>
+      </div>
+
+      <!-- FOOTER -->
+      <mat-toolbar class="footer-toolbar">
+        <span>© 2025 Global Bank Ethiopia, S.C. Brought you by Biniyam K.</span>
+      </mat-toolbar>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

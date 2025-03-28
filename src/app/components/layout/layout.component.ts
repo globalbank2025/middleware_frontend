@@ -14,9 +14,15 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 export class LayoutComponent implements OnInit {
   @ViewChild('sidenav') sidenav!: MatSidenav;
   currentUser: any;
+  
+  // Toggle for VAT submenu (Maker/Checker)
   isVatExpanded: boolean = false;
+  
+  // Toggle for Administration submenu (Admin only)
+  isAdministrationExpanded: boolean = false;
 
   isAdmin$!: Observable<boolean>;
+  isMakerOrChecker$!: Observable<boolean>;
   isMobile = false;
 
   constructor(
@@ -28,7 +34,7 @@ export class LayoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // isAdmin$ indicates if user is Admin
+    // isAdmin$ indicates if user has Admin role
     this.isAdmin$ = this.authService.user$.pipe(
       map(userData => {
         if (!userData) return false;
@@ -36,7 +42,15 @@ export class LayoutComponent implements OnInit {
       })
     );
 
-    // Observe screen size for mobile
+    // isMakerOrChecker$ indicates if user has Maker or Checker role
+    this.isMakerOrChecker$ = this.authService.user$.pipe(
+      map(userData => {
+        if (!userData) return false;
+        return userData.user.roles.includes('Maker') || userData.user.roles.includes('Checker');
+      })
+    );
+
+    // Observe screen size for mobile devices
     this.breakpointObserver.observe([Breakpoints.Handset]).subscribe(result => {
       this.isMobile = result.matches;
       if (this.isMobile) {
@@ -62,5 +76,9 @@ export class LayoutComponent implements OnInit {
 
   toggleVatSubmenu(): void {
     this.isVatExpanded = !this.isVatExpanded;
+  }
+  
+  toggleAdministrationSubmenu(): void {
+    this.isAdministrationExpanded = !this.isAdministrationExpanded;
   }
 }

@@ -7,132 +7,117 @@
       </div>
 
       <mat-nav-list>
-        <!-- HOME -->
+        <!-- HOME (Always Visible) -->
         <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link" (click)="closeIfMobile()">
           <mat-icon>home</mat-icon>
           <span>Home</span>
         </a>
-
-        <!-- REGISTER (if Admin) -->
-        <a
-          mat-list-item
-          *ngIf="(isAdmin$ | async)"
-          routerLink="/register"
-          routerLinkActive="active-link"
-          (click)="closeIfMobile()"
-        >
-          <mat-icon>person_add</mat-icon>
-          <span>Add User</span>
+        <!-- CHANGE PASSWORD (Available to all logged in users) -->
+        <a mat-list-item routerLink="/change-password" routerLinkActive="active-link" (click)="closeIfMobile()">
+          <mat-icon>lock</mat-icon>
+          <span>Change Password</span>
         </a>
 
-        <!-- BRANCH MGMT (if Admin) -->
-        <a
-          mat-list-item
-          *ngIf="(isAdmin$ | async)"
-          routerLink="/branch-management"
-          routerLinkActive="active-link"
-          (click)="closeIfMobile()"
-        >
-          <mat-icon>domain</mat-icon>
-          <span>Branch Management</span>
-        </a>
-
-        <!-- ROLE MGMT (if Admin) -->
-        <a
-          mat-list-item
-          *ngIf="(isAdmin$ | async)"
-          routerLink="/role-management"
-          routerLinkActive="active-link"
-          (click)="closeIfMobile()"
-        >
-          <mat-icon>assignment_ind</mat-icon>
-          <span>Role Management</span>
-        </a>
-
-        <!-- GL MGMT (if Admin) -->
-        <a
-          mat-list-item
-          *ngIf="(isAdmin$ | async)"
-          routerLink="/service-income-gl-management"
-          routerLinkActive="active-link"
-          (click)="closeIfMobile()"
-        >
-          <mat-icon>bar_chart</mat-icon>
-          <span>GL Management</span>
-        </a>
-
-        <!-- Vat Sub-menu -->
-        <mat-list-item (click)="toggleVatSubmenu()">
-          <mat-icon>receipt_long</mat-icon>
-          <span>Income Vat</span>
-          <mat-icon class="submenu-arrow">
-            {{ isVatExpanded ? 'expand_less' : 'expand_more' }}
-          </mat-icon>
-        </mat-list-item>
-        <div *ngIf="isVatExpanded" class="submenu">
-          <!-- link to the collection form (Collect) -->
-          <a
-            mat-list-item
-            routerLink="/vat-collection"
-            routerLinkActive="active-link"
-            (click)="closeIfMobile()"
-          >
-            <mat-icon>receipt</mat-icon>
-            <span>Collect Vat</span>
-          </a>
-
-          <!-- link to the same list component but with PENDING status -->
-          <a mat-list-item routerLink="/vat-list/PENDING" routerLinkActive="active-link" (click)="closeIfMobile()">
-            <mat-icon>pending_actions</mat-icon>
-            <span>Pending Vat</span>
-          </a>
-
-          <!-- link for APPROVED status -->
-          <a mat-list-item routerLink="/vat-list/APPROVED" routerLinkActive="active-link" (click)="closeIfMobile()">
-            <mat-icon>check_circle</mat-icon>
-            <span>Approved Vat</span>
-          </a>
-
-          <!-- link for REJECTED status -->
-          <a mat-list-item routerLink="/vat-list/REJECTED" routerLinkActive="active-link" (click)="closeIfMobile()">
-            <mat-icon>cancel</mat-icon>
-            <span>Rejected Vat</span>
-          </a>
-          <!-- link for Transaction Log -->
-          <a mat-list-item routerLink="transaction-logs" routerLinkActive="active-link" (click)="closeIfMobile()">
-            <mat-icon>cancel</mat-icon>
-            <span>Transaction Log</span>
-          </a>
+        <!-- ADMINISTRATION GROUP (Only if user is Admin) -->
+        <div *ngIf="(isAdmin$ | async)">
+          <mat-list-item (click)="toggleAdministrationSubmenu()">
+            <mat-icon>admin_panel_settings</mat-icon>
+            <span>Administration</span>
+            <mat-icon class="submenu-arrow">
+              {{ isAdministrationExpanded ? 'expand_less' : 'expand_more' }}
+            </mat-icon>
+          </mat-list-item>
+          <div *ngIf="isAdministrationExpanded" class="submenu">
+            <!-- Add User -->
+            <a mat-list-item routerLink="/register" routerLinkActive="active-link" (click)="closeIfMobile()">
+              <mat-icon>person_add</mat-icon>
+              <span>Add User</span>
+            </a>
+            <!-- Branch Management -->
+            <a mat-list-item routerLink="/branch-management" routerLinkActive="active-link" (click)="closeIfMobile()">
+              <mat-icon>domain</mat-icon>
+              <span>Branch Management</span>
+            </a>
+            <!-- Role Management -->
+            <a mat-list-item routerLink="/role-management" routerLinkActive="active-link" (click)="closeIfMobile()">
+              <mat-icon>assignment_ind</mat-icon>
+              <span>Role Management</span>
+            </a>
+            <!-- GL Management -->
+            <a mat-list-item routerLink="/service-income-gl-management" routerLinkActive="active-link" (click)="closeIfMobile()">
+              <mat-icon>bar_chart</mat-icon>
+              <span>GL Management</span>
+            </a>
+            <!-- Permission Management -->
+            <a mat-list-item routerLink="/permission-management" routerLinkActive="active-link" (click)="closeIfMobile()">
+              <mat-icon>security</mat-icon>
+              <span>Permission Management</span>
+            </a>
+            <!-- Server Testing -->
+            <a mat-list-item routerLink="/test-servers" routerLinkActive="active-link" (click)="closeIfMobile()">
+              <mat-icon>settings</mat-icon>
+              <span>Server Testing</span>
+            </a>
+            <!-- Users List -->
+            <a mat-list-item routerLink="/users-list" routerLinkActive="active-link" (click)="closeIfMobile()">
+              <mat-icon>group</mat-icon>
+              <span>Users List</span>
+            </a>
+            <!-- Partner -->
+            <a mat-list-item routerLink="/partner" routerLinkActive="active-link" (click)="closeIfMobile()">
+              <mat-icon>settings</mat-icon>
+              <span>Partner</span>
+            </a>
+            <!-- Services -->
+            <a mat-list-item routerLink="/service-management" routerLinkActive="active-link" (click)="closeIfMobile()">
+              <mat-icon>settings</mat-icon>
+              <span>Services</span>
+            </a>
+            <!-- API-Credential  -->
+            <a mat-list-item routerLink="/api-credentials-management" routerLinkActive="active-link" (click)="closeIfMobile()">
+              <mat-icon>settings</mat-icon>
+              <span>API Credentials</span>
+            </a>
+          </div>
         </div>
 
-        <!-- PERMISSION MGMT (if Admin) -->
-        <a
-        mat-list-item
-        *ngIf="(isAdmin$ | async)"
-        routerLink="/permission-management"
-        routerLinkActive="active-link"
-        (click)="closeIfMobile()"
-        >
-        <mat-icon>security</mat-icon>
-        <span>Permission Management</span>
-        </a>
-        <!-- USER LIST -->
-        <a mat-list-item routerLink="/users-list" routerLinkActive="active-link" (click)="closeIfMobile()">
-          <mat-icon>group</mat-icon>
-          <span>Users List</span>
-        </a>
-
-        <!-- SERVER TESTING -->
-        <a mat-list-item routerLink="/test-servers" routerLinkActive="active-link" (click)="closeIfMobile()">
-          <mat-icon>settings</mat-icon>
-          <span>Server Testing</span>
-        </a>
-
-        <!-- Role-Permission -->
-        <a mat-list-item routerLink="/role-permission" routerLinkActive="active-link" (click)="closeIfMobile()">
-          <mat-icon>settings</mat-icon>
-          <span>Role Permission</span>
-        </a>
+        <!-- INCOME VAT (Only if user is Maker or Checker) -->
+        <ng-container *ngIf="(isMakerOrChecker$ | async)">
+          <mat-list-item (click)="toggleVatSubmenu()">
+            <mat-icon>receipt_long</mat-icon>
+            <span>Income Vat</span>
+            <mat-icon class="submenu-arrow">
+              {{ isVatExpanded ? 'expand_less' : 'expand_more' }}
+            </mat-icon>
+          </mat-list-item>
+          <div *ngIf="isVatExpanded" class="submenu">
+            <!-- Collect Vat -->
+            <a mat-list-item routerLink="/vat-collection" routerLinkActive="active-link" (click)="closeIfMobile()">
+              <mat-icon>receipt</mat-icon>
+              <span>Collect Vat</span>
+            </a>
+            <!-- Pending Vat -->
+            <a mat-list-item routerLink="/vat-list/PENDING" routerLinkActive="active-link" (click)="closeIfMobile()">
+              <mat-icon>pending_actions</mat-icon>
+              <span>Pending Vat</span>
+            </a>
+            <!-- Approved Vat -->
+            <a mat-list-item routerLink="/vat-list/APPROVED" routerLinkActive="active-link" (click)="closeIfMobile()">
+              <mat-icon>check_circle</mat-icon>
+              <span>Approved Vat</span>
+            </a>
+            <!-- Rejected Vat -->
+            <a mat-list-item routerLink="/vat-list/REJECTED" routerLinkActive="active-link" (click)="closeIfMobile()">
+              <mat-icon>cancel</mat-icon>
+              <span>Rejected Vat</span>
+            </a>
+            <!-- Transaction Log -->
+            <a mat-list-item routerLink="/transaction-logs" routerLinkActive="active-link" (click)="closeIfMobile()">
+              <mat-icon>cancel</mat-icon>
+              <span>Transaction Log</span>
+            </a>
+          </div>
+        </ng-container>
       </mat-nav-list>
     </mat-sidenav>
 

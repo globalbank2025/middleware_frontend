@@ -4,7 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { VatCollectionService, VatCollectionTransactionDto } from '../../services/vat-collection.service';
 import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { InvoiceStateService } from '../../services/invoice-state.service';
 
 @Component({
@@ -30,6 +30,7 @@ export class VatCollectionListComponent implements OnInit {
   dataSource = new MatTableDataSource<VatCollectionTransactionDto>([]);
   loading = false;
   errorMsg: string | null = null;
+  currentStatus: string = 'PENDING';
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -38,16 +39,21 @@ export class VatCollectionListComponent implements OnInit {
     private vatService: VatCollectionService,
     private toastr: ToastrService,
     private router: Router,
-    private invoiceState: InvoiceStateService // <-- Inject our InvoiceStateService
+    private invoiceState: InvoiceStateService, // <-- Inject our InvoiceStateService
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.fetchPendingTransactions();
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      const status = params.get('status');
+      this.currentStatus = status ? status : 'PENDING';
+      this.fetchTransactions();
+    });
   }
 
-  fetchPendingTransactions(): void {
+  fetchTransactions(): void {
     this.loading = true;
-    this.vatService.getPendingVatCollections().subscribe({
+    this.vatService.getVatCollectionsByStatus(this.currentStatus).subscribe({
       next: (res) => {
         this.dataSource.data = res;
         // Optional: ensure numeric sorting for numeric fields.
@@ -68,7 +74,7 @@ export class VatCollectionListComponent implements OnInit {
       },
       error: (err) => {
         console.error('Fetch error', err);
-        this.errorMsg = 'Failed to load pending VAT transactions.';
+        this.errorMsg = `Failed to load ${this.currentStatus} VAT transactions.`;
         this.loading = false;
       }
     });
@@ -89,7 +95,6 @@ export class VatCollectionListComponent implements OnInit {
         this.toastr.success('Transaction approved successfully.', 'Approved');
 
         // 3) If you already have all invoice data in `row`, adapt as needed:
-        //    (In real scenarios, you might do a second call or pass more details.)
         const invoiceData = {
           customerName: row.customerName,
           accountNumber: row.accountNumber,
@@ -145,11 +150,12 @@ export class VatCollectionListComponent implements OnInit {
     this.vatService.deleteVatCollection(row.id).subscribe({
       next: () => {
         this.toastr.success('Transaction deleted.', 'Deleted');
-        this.fetchPendingTransactions();
+        this.fetchTransactions();
       },
       error: (err) => {
-        this.toastr.error('Failed to delete transaction.', 'Error');
-        console.error(err);
+        console.error('Error fetching transaction logs:', err);
+        const errorMessage = err.error?.error || 'An unexpected error occurred.';
+        this.toastr.error(errorMessage, 'Error');
       }
     });
   }
@@ -159,7 +165,37 @@ export class VatCollectionListComponent implements OnInit {
     if (action === 'approve') {
       this.onApprove(row);
     } else if (action === 'reject') {
-      this.onDelete(row);
+      this.onReject(row);
     }
+  }
+
+  onReject(row: VatCollectionTransactionDto): void {
+    if (!row.id) return;
+    if (!confirm(`Are you sure you want to reject transaction #${row.id}?`)) {
+      return;
+    }
+    this.vatService.rejectVatCollection(row.id).subscribe({
+      next: (res) => {
+        this.toastr.success(res.message || `Transaction #${row.id} rejected.`, 'Rejected');
+        this.fetchTransactions();
+      },
+      error: (err) => {
+        console.error('Error rejecting transaction:', err);
+        let errorMessage = 'An error occurred while rejecting the transaction.';
+        if (err.error) {
+          if (typeof err.error === 'object' && err.error.error) {
+            errorMessage = err.error.error;
+          } else if (typeof err.error === 'string') {
+            try {
+              const parsed = JSON.parse(err.error);
+              errorMessage = parsed.error || err.error;
+            } catch (e) {
+              errorMessage = err.error;
+            }
+          }
+        }
+        this.toastr.error(errorMessage, 'Error');
+      }
+    });
   }
 }

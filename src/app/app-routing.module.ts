@@ -16,6 +16,10 @@ import { ServerTestingComponent } from './components/server-testing/server-testi
 import { TransactionLogListComponent } from './components/transaction-log-list/transaction-log-list.component';
 import { PermissionManagementComponent } from './components/permission-management/permission-management.component';
 import { RolePermissionManagementComponent } from './components/role-permission-management/role-permission-management.component';
+import { PartnerManagementComponent } from './components/partner-management/partner-management.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { ServiceManagementComponent } from './components/service-management/service-management.component';
+import { ApiCredentialsManagementComponent } from './components/api-credentials-management/api-credentials-management.component';
 
 const routes: Routes = [
   // If someone hits '/', redirect to '/dashboard'
@@ -44,6 +48,13 @@ const routes: Routes = [
       { path: 'transaction-logs', component: TransactionLogListComponent },
       { path: 'permission-management', component: PermissionManagementComponent },
       { path: 'role-permission', component: RolePermissionManagementComponent },
+      { path: 'partner', component: PartnerManagementComponent },
+      { path: 'change-password', component: ChangePasswordComponent },
+      { path: 'service-management', component: ServiceManagementComponent },
+      { path: 'api-credentials-management', component: ApiCredentialsManagementComponent },
+
+
+
 
 
 

@@ -19,7 +19,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
-import { MatSnackBarModule } from '@angular/material/snack-bar'; // ✅ Toastr Alternative
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'; // ✅ Toastr Alternative
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
 // Import Components
@@ -42,7 +42,11 @@ import { JsonPayloadDialogComponent } from './components/json-payload-dialog/jso
 import { PermissionManagementComponent } from './components/permission-management/permission-management.component';
 import { RolePermissionManagementComponent } from './components/role-permission-management/role-permission-management.component';
 import { MatChipsModule } from '@angular/material/chips';  // <-- Importing Chips
-import { MatIconModule } from '@angular/material/icon';     // <-- Importing Icons
+import { MatIconModule } from '@angular/material/icon';
+import { PartnerManagementComponent } from './components/partner-management/partner-management.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { ServiceManagementComponent } from './components/service-management/service-management.component';
+import { ApiCredentialsManagementComponent } from './components/api-credentials-management/api-credentials-management.component';     // <-- Importing Icons
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,6 +66,10 @@ import { MatIconModule } from '@angular/material/icon';     // <-- Importing Ico
     JsonPayloadDialogComponent,
     PermissionManagementComponent,
     RolePermissionManagementComponent,
+    PartnerManagementComponent,
+    ChangePasswordComponent,
+    ServiceManagementComponent,
+    ApiCredentialsManagementComponent,
   ],
   imports: [
     BrowserModule,

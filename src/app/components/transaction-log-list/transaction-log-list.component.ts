@@ -8,6 +8,7 @@ import {
   TransactionLogService
 } from 'src/app/services/transaction-log.service';
 import { JsonPayloadDialogComponent } from '../json-payload-dialog/json-payload-dialog.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-transaction-log-list',
@@ -33,7 +34,9 @@ export class TransactionLogListComponent implements OnInit {
 
   constructor(
     private transactionLogService: TransactionLogService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private toastr: ToastrService
+    
   ) {}
 
   ngOnInit(): void {
@@ -55,9 +58,12 @@ export class TransactionLogListComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error fetching transaction logs:', err);
+        const errorMessage = err.error?.error || 'An unexpected error occurred.';
+        this.toastr.error(errorMessage, 'Error');
       }
     });
   }
+  
 
   applyFilter(): void {
     this.dataSource.filter = this.searchKey.trim().toLowerCase();

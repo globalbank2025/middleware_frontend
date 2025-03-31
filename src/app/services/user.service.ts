@@ -14,12 +14,12 @@ export interface UserWithRoles {
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'https://localhost:7033/api/Auth'; // Adjust as needed
+  private apiUrl = 'http://10.10.14.21:4060/api/Auth'; // Adjust as needed
 
   constructor(private http: HttpClient) { }
 
   getUsersWithRoles(): Observable<UserWithRoles[]> {
-    return this.http.get<UserWithRoles[]>(`https://localhost:7033/api/User/list`);
+    return this.http.get<UserWithRoles[]>(`http://10.10.14.21:4060/api/User/list`);
   }
   // NEW METHOD: Reset user password to default ("Gbe@1234")
   resetUserPassword(userId: string): Observable<any> {

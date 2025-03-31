@@ -1,15 +1,16 @@
 <mat-card class="payload-card">
-    <mat-card-header>
-      <mat-card-title>{{ data.title }}</mat-card-title>
-      <mat-card-subtitle *ngIf="!isValidJson">Raw Data (invalid JSON)</mat-card-subtitle>
-    </mat-card-header>
-  
-    <mat-card-content>
-      <pre class="json-view">{{ formattedJson }}</pre>
-    </mat-card-content>
-  
-    <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="close()">Close</button>
-    </mat-card-actions>
-  </mat-card>
-  
+  <mat-card-header>
+    <mat-card-title>{{ data.title }}</mat-card-title>
+    <mat-card-subtitle *ngIf="isJson">Formatted JSON Data</mat-card-subtitle>
+    <mat-card-subtitle *ngIf="isXml">Formatted XML Data</mat-card-subtitle>
+    <mat-card-subtitle *ngIf="!isJson && !isXml">Raw Data (unformatted)</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <pre class="data-view">{{ formattedData }}</pre>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="close()">Close</button>
+  </mat-card-actions>
+</mat-card>

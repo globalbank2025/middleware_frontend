@@ -47,7 +47,7 @@ export interface VatCollectionTransactionDto {
 
 @Injectable({ providedIn: 'root' })
 export class VatCollectionService {
-  private apiBaseUrl = 'http://10.10.14.21:4060/api';
+  private apiBaseUrl = 'https://localhost:7033/api';
 
   constructor(private http: HttpClient) {}
 

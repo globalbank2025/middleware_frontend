@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core'; 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -62,6 +62,7 @@ export class VatCollectionComponent implements OnInit {
       error: (err) => console.error('Failed to load Service Income GL options', err)
     });
 
+    // When the principal amount or selected GL changes, update the computed values.
     this.vatForm.get('transferAmount')?.valueChanges.subscribe(() => {
       this.updateComputedValues();
     });
@@ -70,10 +71,10 @@ export class VatCollectionComponent implements OnInit {
     });
   }
 
-  // Getter to retrieve the selected GL object
+  // Getter to retrieve the selected GL object by its unique id.
   get selectedGL(): ServiceIncomeGl | undefined {
-    const selectedCode = this.vatForm.get('serviceIncomeGl')?.value;
-    return this.serviceIncomeGlOptions.find(gl => gl.glCode === selectedCode);
+    const selectedId = this.vatForm.get('serviceIncomeGl')?.value;
+    return this.serviceIncomeGlOptions.find(gl => gl.id === selectedId);
   }
 
   private updateComputedValues(): void {
@@ -87,21 +88,26 @@ export class VatCollectionComponent implements OnInit {
       return;
     }
     const principalAmount = Number(principal);
-    const selectedGlCode = this.vatForm.get('serviceIncomeGl')?.value;
-    let serviceCharge: number | null = null;
-    const selectedGl = this.serviceIncomeGlOptions.find(gl => gl.glCode === selectedGlCode);
+    const selectedGlId = this.vatForm.get('serviceIncomeGl')?.value;
+    let serviceCharge: number = 0;
+    let vatOnServiceCharge: number = 0;
+    const selectedGl = this.serviceIncomeGlOptions.find(gl => gl.id === selectedGlId);
+    
     if (selectedGl) {
       if (selectedGl.calculationType === 'Flat') {
+        // For Flat, use the flatPrice as the service charge,
+        // and calculate 15% of that for the VAT on Service Charge.
         serviceCharge = selectedGl.flatPrice || 0;
+        vatOnServiceCharge = serviceCharge * 0.15;
       } else if (selectedGl.calculationType === 'Rate') {
+        // For Rate, calculate the service charge as principal * (rate/100),
+        // and then VAT on Service Charge is 15% of that amount.
         const rateNum = Number(selectedGl.rate || 0);
         serviceCharge = principalAmount * (rateNum / 100);
+        vatOnServiceCharge = serviceCharge * 0.15;
       }
     }
-    const vatOnServiceCharge = serviceCharge !== null ? serviceCharge * 0.15 : null;
-    const totalAmount = serviceCharge !== null && vatOnServiceCharge !== null
-      ? principalAmount + serviceCharge + vatOnServiceCharge
-      : null;
+    const totalAmount = principalAmount + serviceCharge + vatOnServiceCharge;
     this.vatForm.patchValue({
       serviceCharge,
       vatOnServiceCharge,
@@ -196,7 +202,6 @@ export class VatCollectionComponent implements OnInit {
   }
 
   onPay(): void {
-    // Validate the form first.
     if (this.vatForm.invalid) {
       this.errorMsg = 'Please fill all required fields properly.';
       return;
@@ -205,7 +210,7 @@ export class VatCollectionComponent implements OnInit {
       return;
     }
     
-    // Retrieve the loginResponse from local storage to extract branchCode.
+    // Retrieve the branch code from the login response stored in local storage.
     const loginResponse = localStorage.getItem('loginResponse');
     let branchCode = 0;
     if (loginResponse) {
@@ -217,7 +222,14 @@ export class VatCollectionComponent implements OnInit {
       }
     }
     
-    // Build the transaction DTO using form values.
+    // Look up the selected GL object using its id from the form.
+    const selectedGlId = this.vatForm.get('serviceIncomeGl')?.value;
+    const selectedGl = this.serviceIncomeGlOptions.find(gl => gl.id === selectedGlId);
+    
+    // Use the GL code (as a string) instead of the id.
+    const glCodeValue = selectedGl ? selectedGl.glCode : '';
+    
+    // Build the DTO with the form values, sending glCodeValue for serviceIncomeGl.
     const dto: VatCollectionTransactionDto = {
       branchCode: branchCode,
       accountNumber: this.vatForm.get('accountNumber')?.value,
@@ -225,7 +237,7 @@ export class VatCollectionComponent implements OnInit {
       customerTinNo: this.vatForm.get('customerTinNo')?.value,
       customerTelephone: this.vatForm.get('customerTelephone')?.value,
       principalAmount: this.vatForm.get('transferAmount')?.value,
-      serviceIncomeGl: this.vatForm.get('serviceIncomeGl')?.value,
+      serviceIncomeGl: glCodeValue, // Now sending glCode instead of the id.
       serviceCharge: this.vatForm.get('serviceCharge')?.value,
       vatOnServiceCharge: this.vatForm.get('vatOnServiceCharge')?.value,
       totalAmount: this.vatForm.get('totalAmount')?.value,
@@ -233,7 +245,6 @@ export class VatCollectionComponent implements OnInit {
       customerName: this.vatForm.get('customerName')?.value
     };
   
-    // Call the backend service to create the VAT collection transaction.
     this.vatService.createVatCollectionTransaction(dto).subscribe({
       next: () => {
         this.toastr.success('Transaction saved as pending.', 'Success');
@@ -243,7 +254,6 @@ export class VatCollectionComponent implements OnInit {
         this.isPayDisabled = true;
       },
       error: (err) => {
-        // Attempt to extract a detailed error message from the backend response.
         let errorMessage = 'Failed to save transaction.';
         if (err && err.error) {
           if (typeof err.error === 'string') {

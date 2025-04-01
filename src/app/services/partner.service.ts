@@ -7,7 +7,7 @@ import { Partner } from '../models/partner.model';
   providedIn: 'root'
 })
 export class PartnerService {
-  private baseUrl = 'http://10.10.14.21:4060/api/Partner'; // adjust as needed
+  private baseUrl = 'https://localhost:7033/api/Partner'; // adjust as needed
 
   constructor(private http: HttpClient) { }
 

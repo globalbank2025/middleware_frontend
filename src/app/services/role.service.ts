@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class RoleService {
   // Adjust the base URL as per your environment or backend configuration
-  private baseUrl = 'http://10.10.14.21:4060/api/Role';
+  private baseUrl = 'https://localhost:7033/api/Role';
 
   constructor(private http: HttpClient) {}
 

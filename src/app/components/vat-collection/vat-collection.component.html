@@ -25,7 +25,7 @@
       <mat-form-field class="form-field" appearance="fill">
         <mat-label>Select Service Income GL *</mat-label>
         <mat-select formControlName="serviceIncomeGl">
-          <mat-option *ngFor="let gl of serviceIncomeGlOptions" [value]="gl.glCode">
+          <mat-option *ngFor="let gl of serviceIncomeGlOptions" [value]="gl.id">
             {{ gl.glCode }} - {{ gl.name }}
           </mat-option>
         </mat-select>
@@ -34,6 +34,7 @@
         </mat-error>
       </mat-form-field>
     </div>
+
     <!-- Display GL info -->
     <div class="gl-info" *ngIf="selectedGL">
       <small>

@@ -7,7 +7,7 @@ import { Service } from '../models/service.model';
   providedIn: 'root'
 })
 export class ServiceService {
-  private baseUrl = 'http://10.10.14.21:4060/api/Service'; // Adjust to match your API
+  private baseUrl = 'https://localhost:7033/api/Service'; // Adjust to match your API
 
   constructor(private http: HttpClient) { }
 

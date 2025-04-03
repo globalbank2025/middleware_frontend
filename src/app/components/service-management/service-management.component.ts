@@ -16,11 +16,15 @@ import { ServiceService } from 'src/app/services/service.service';
 })
 export class ServiceManagementComponent implements OnInit {
   displayedColumns: string[] = [
+    'serviceId',
     'serviceCode',
     'serviceName',
+    'description',
     'serviceType',
     'offsetAccNo',
     'status',
+    'productCode',
+    'sourceCode',
     'actions'
   ];
   dataSource = new MatTableDataSource<Service>([]);
@@ -67,15 +71,16 @@ export class ServiceManagementComponent implements OnInit {
     this.isEdit = !!service;
     this.editServiceId = service ? service.serviceId! : 0;
 
-    // Include hidden control for serviceId in the form group.
     this.serviceForm = this.fb.group({
-      serviceId: [service ? service.serviceId : null], // hidden field
+      serviceId: [service ? service.serviceId : null],
       serviceCode: [service ? service.serviceCode : '', Validators.required],
       serviceName: [service ? service.serviceName : '', Validators.required],
       description: [service ? service.description : '', Validators.required],
       serviceType: [service ? service.serviceType : 'Credit', Validators.required],
       offsetAccNo: [service ? service.offsetAccNo : '', Validators.required],
-      status: [service ? service.status : 'ACTIVE', Validators.required]
+      status: [service ? service.status : 'ACTIVE', Validators.required],
+      productCode: [service ? service.productCode : 'FTRQ', Validators.required],
+      sourceCode: [service ? service.sourceCode : 'TLB', Validators.required]
     });
 
     this.dialogRef = this.dialog.open(this.dialogTpl, {

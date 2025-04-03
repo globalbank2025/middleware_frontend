@@ -1,116 +1,140 @@
 <div class="service-container">
-    <h2>Service Management</h2>
-  
-    <!-- Add Service Button -->
-    <button mat-raised-button color="primary" (click)="openDialog()">Add Service</button>
-  
-    <!-- Search Field -->
-    <mat-form-field appearance="fill" class="search-field">
-      <mat-label>Search Services</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Type to filter">
-    </mat-form-field>
-  
-    <!-- Service Table -->
-    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-  
-      <!-- Service Code Column -->
-      <ng-container matColumnDef="serviceCode">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Code</th>
-        <td mat-cell *matCellDef="let service">{{ service.serviceCode }}</td>
-      </ng-container>
-  
-      <!-- Service Name Column -->
-      <ng-container matColumnDef="serviceName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-        <td mat-cell *matCellDef="let service">{{ service.serviceName }}</td>
-      </ng-container>
-  
-      <!-- Service Type Column -->
-      <ng-container matColumnDef="serviceType">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
-        <td mat-cell *matCellDef="let service">{{ service.serviceType }}</td>
-      </ng-container>
-  
-      <!-- OffsetAccNo Column -->
-      <ng-container matColumnDef="offsetAccNo">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Offset Acc</th>
-        <td mat-cell *matCellDef="let service">{{ service.offsetAccNo }}</td>
-      </ng-container>
-  
-      <!-- Status Column -->
-      <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
-        <td mat-cell *matCellDef="let service">{{ service.status }}</td>
-      </ng-container>
-  
-      <!-- Actions Column -->
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>Actions</th>
-        <td mat-cell *matCellDef="let service">
-          <button mat-icon-button color="accent" (click)="openDialog(service)">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button color="warn" (click)="deleteService(service.serviceId!)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </td>
-      </ng-container>
-  
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-  
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-  </div>
-  
-  <!-- Dialog Template -->
-  <ng-template #dialogTpl let-dialogRef="dialogRef">
-    <h2 mat-dialog-title>{{ isEdit ? 'Edit Service' : 'Add Service' }}</h2>
-    <div mat-dialog-content>
-      <form [formGroup]="serviceForm">
-        <!-- Hidden input for serviceId -->
-        <input type="hidden" formControlName="serviceId">
+  <h2>Service Management</h2>
 
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Service Code</mat-label>
-          <input matInput formControlName="serviceCode">
-        </mat-form-field>
-  
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Service Name</mat-label>
-          <input matInput formControlName="serviceName">
-        </mat-form-field>
-  
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Description</mat-label>
-          <input matInput formControlName="description">
-        </mat-form-field>
-  
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Service Type</mat-label>
-          <mat-select formControlName="serviceType">
-            <mat-option value="Credit">Credit</mat-option>
-            <mat-option value="Debit">Debit</mat-option>
-          </mat-select>
-        </mat-form-field>
-  
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Offset Account</mat-label>
-          <input matInput formControlName="offsetAccNo">
-        </mat-form-field>
-  
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Status</mat-label>
-          <mat-select formControlName="status">
-            <mat-option value="ACTIVE">ACTIVE</mat-option>
-            <mat-option value="INACTIVE">INACTIVE</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </form>
-    </div>
-    <div mat-dialog-actions align="end">
-      <button mat-button (click)="closeDialog()">Cancel</button>
-      <button mat-raised-button color="primary" [disabled]="serviceForm.invalid" (click)="saveDialog()">Save</button>
-    </div>
-  </ng-template>
-  
+  <!-- Add Service Button -->
+  <button mat-raised-button color="primary" (click)="openDialog()">Add Service</button>
+
+  <!-- Search Field -->
+  <mat-form-field appearance="fill" class="search-field">
+    <mat-label>Search Services</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Type to filter">
+  </mat-form-field>
+
+  <!-- Service Table -->
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    <!-- Service ID Column -->
+    <ng-container matColumnDef="serviceId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Service ID</th>
+      <td mat-cell *matCellDef="let service">{{ service.serviceId }}</td>
+    </ng-container>
+
+    <!-- Service Code Column -->
+    <ng-container matColumnDef="serviceCode">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Code</th>
+      <td mat-cell *matCellDef="let service">{{ service.serviceCode }}</td>
+    </ng-container>
+
+    <!-- Service Name Column -->
+    <ng-container matColumnDef="serviceName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+      <td mat-cell *matCellDef="let service">{{ service.serviceName }}</td>
+    </ng-container>
+
+    <!-- Description Column -->
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
+      <td mat-cell *matCellDef="let service" class="wrap-text">{{ service.description }}</td>
+    </ng-container>
+
+    <!-- Service Type Column -->
+    <ng-container matColumnDef="serviceType">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
+      <td mat-cell *matCellDef="let service">{{ service.serviceType }}</td>
+    </ng-container>
+
+    <!-- Offset Account Column -->
+    <ng-container matColumnDef="offsetAccNo">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Offset Acc</th>
+      <td mat-cell *matCellDef="let service">{{ service.offsetAccNo }}</td>
+    </ng-container>
+
+    <!-- Status Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+      <td mat-cell *matCellDef="let service">{{ service.status }}</td>
+    </ng-container>
+
+    <!-- Product Code Column -->
+    <ng-container matColumnDef="productCode">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Product Code</th>
+      <td mat-cell *matCellDef="let service">{{ service.productCode }}</td>
+    </ng-container>
+
+    <!-- Source Code Column -->
+    <ng-container matColumnDef="sourceCode">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Source Code</th>
+      <td mat-cell *matCellDef="let service">{{ service.sourceCode }}</td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let service">
+        <button mat-icon-button color="accent" (click)="openDialog(service)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteService(service.serviceId)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>
+
+<!-- Dialog Template -->
+<ng-template #dialogTpl let-dialogRef="dialogRef">
+  <h2 mat-dialog-title>{{ isEdit ? 'Edit Service' : 'Add Service' }}</h2>
+  <div mat-dialog-content>
+    <form [formGroup]="serviceForm">
+      <!-- Hidden input for serviceId -->
+      <input type="hidden" formControlName="serviceId">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Service Code</mat-label>
+        <input matInput formControlName="serviceCode">
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Service Name</mat-label>
+        <input matInput formControlName="serviceName">
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Description</mat-label>
+        <input matInput formControlName="description">
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Service Type</mat-label>
+        <mat-select formControlName="serviceType">
+          <mat-option value="Credit">Credit</mat-option>
+          <mat-option value="Debit">Debit</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Offset Account</mat-label>
+        <input matInput formControlName="offsetAccNo">
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status">
+          <mat-option value="ACTIVE">ACTIVE</mat-option>
+          <mat-option value="INACTIVE">INACTIVE</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Product Code</mat-label>
+        <input matInput formControlName="productCode">
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Source Code</mat-label>
+        <input matInput formControlName="sourceCode">
+      </mat-form-field>
+    </form>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button mat-button (click)="closeDialog()">Cancel</button>
+    <button mat-raised-button color="primary" [disabled]="serviceForm.invalid" (click)="saveDialog()">Save</button>
+  </div>
+</ng-template>

@@ -22,7 +22,7 @@ export interface TransactionLog {
 })
 export class TransactionLogService {
   // Ideally, read this from environment.ts
-  private readonly baseUrl = 'https://localhost:7033/api'; 
+  private readonly baseUrl = 'http://10.10.14.21:4060/api'; 
 
   constructor(private http: HttpClient) {}
 

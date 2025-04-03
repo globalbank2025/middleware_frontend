@@ -1,24 +1,37 @@
 .service-container {
-    padding: 1rem;
-    background-color: #f5f5f5;
-  }
-  
-  .service-container h2 {
-    margin-bottom: 1rem;
-  }
-  
-  .search-field {
-    width: 300px;
-    margin: 1rem 0;
-  }
-  
-  table {
-    width: 100%;
-    margin-bottom: 1rem;
-  }
-  
-  .full-width {
-    width: 100%;
-    margin-bottom: 1rem;
-  }
-  
+  padding: 1rem;
+  background-color: #f5f5f5;
+}
+
+.service-container h2 {
+  margin-bottom: 1rem;
+}
+
+.search-field {
+  width: 300px;
+  margin: 1rem 0;
+}
+
+table {
+  width: 100%;
+  margin-bottom: 1rem;
+  table-layout: fixed; /* Helps columns avoid overlapping */
+}
+
+/* Make text wrap instead of overlapping */
+.wrap-text {
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+/* Ensure each cell can wrap content */
+.mat-cell, .mat-header-cell {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 1rem;
+}

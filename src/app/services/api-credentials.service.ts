@@ -7,7 +7,7 @@ import { ApiCredentials } from '../models/api-credentials.model';
   providedIn: 'root'
 })
 export class ApiCredentialsService {
-  private baseUrl = 'https://localhost:7033/api/ApiCredentials'; // Adjust to match your API
+  private baseUrl = 'http://10.10.14.21:4060/api/ApiCredentials'; // Adjust to match your API
 
   constructor(private http: HttpClient) { }
 

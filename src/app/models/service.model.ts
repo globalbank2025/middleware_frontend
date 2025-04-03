@@ -8,5 +8,7 @@ export interface Service {
     status: string;       // "ACTIVE" or "INACTIVE"
     createdAt?: string;
     updatedAt?: string;
+    productCode?: string;
+    sourceCode?: string;
   }
   

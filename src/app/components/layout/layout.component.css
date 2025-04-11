@@ -56,15 +56,17 @@ mat-list-item:hover {
   background-color: #d1eaff;
 }
 
-/* VAT Submenu Styles */
+/* Submenu Styles */
 .submenu {
   padding-left: 2rem;
 }
+
 .submenu a.mat-list-item {
   font-size: 0.9rem;
   display: flex;
   align-items: center;
 }
+
 .submenu a.mat-list-item mat-icon {
   margin-right: 0.5rem;
 }
@@ -73,12 +75,13 @@ mat-list-item:hover {
 .header-toolbar {
   position: sticky;
   top: 0;
-  z-index: 2;
+  z-index: 10;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
   background: linear-gradient(-45deg, #3b6f50, #eaad21, #3b6f50, #eaad21);
   background-size: 400% 400%;
   animation: gradientAnimation 40s ease infinite;
   color: #fff;
+  overflow: visible !important; /* Allow absolutely positioned children to display */
 }
 
 .menu-button {
@@ -94,7 +97,61 @@ mat-list-item:hover {
   flex: 1 1 auto;
 }
 
-/* Main Content Area */
+/* User Button in Top-Right */
+.user-button {
+  color: #fff;
+  font-family: 'Roboto', 'Helvetica', Arial, sans-serif;
+  font-size: 1rem;
+  text-transform: none;
+}
+
+/* User Profile Section (container for toggle button & panel) */
+.user-profile-section {
+  position: relative;
+  display: inline-block;
+}
+
+/* User Info Panel */
+.user-info-panel {
+  position: absolute;
+  top: 56px; /* Adjust so panel appears just below toolbar button */
+  right: 0;
+  background-color: #fff;
+  color: #333;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  width: 250px;
+  z-index: 9999;
+
+  /* Font improvements */
+  font-family: 'Roboto', 'Helvetica', Arial, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* User Info Items */
+.user-info-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.7rem;
+}
+
+.user-info-item mat-icon {
+  margin-right: 0.5rem;
+  font-size: 20px;
+}
+
+/* Button Styling inside User Panel */
+.user-info-panel button[mat-stroked-button] {
+  margin-top: 0.5rem;
+  width: 100%;
+  text-transform: none;
+  font-weight: 500;
+}
+
+/* Layout Content */
 .layout-content {
   padding: 2rem;
   min-height: calc(100vh - 128px); /* Header (64px) + Footer (64px) */
@@ -113,11 +170,18 @@ mat-list-item:hover {
   background-size: 400% 400%;
   animation: gradientAnimation 40s ease infinite;
   color: #fff;
+  text-align: center;
 }
 
 /* Animated Gradient Keyframes */
 @keyframes gradientAnimation {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }

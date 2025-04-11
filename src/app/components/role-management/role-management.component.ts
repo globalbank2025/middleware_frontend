@@ -90,7 +90,10 @@ export class RoleManagementComponent implements OnInit {
         this.closeDialog();
       },
       error: (err: any) => {
-        if (err.error && Array.isArray(err.error)) {
+        // Check if error response has an 'error' property and then display it
+        if (err.error && err.error.error) {
+          this.toastr.error(err.error.error, 'Error');
+        } else if (err.error && Array.isArray(err.error)) {
           const combinedErrors = err.error.join(', ');
           this.toastr.error(combinedErrors, 'Error');
         } else if (typeof err.error === 'string') {
@@ -141,7 +144,9 @@ export class RoleManagementComponent implements OnInit {
         this.closeAssignDialog();
       },
       error: (err: any) => {
-        if (err.error && Array.isArray(err.error)) {
+        if (err.error && err.error.error) {
+          this.toastr.error(err.error.error, 'Error');
+        } else if (err.error && Array.isArray(err.error)) {
           const combinedErrors = err.error.join(', ');
           this.toastr.error(combinedErrors, 'Error');
         } else if (typeof err.error === 'string') {
@@ -206,7 +211,9 @@ export class RoleManagementComponent implements OnInit {
         this.closeRemoveDialog();
       },
       error: (err: any) => {
-        if (err.error && Array.isArray(err.error)) {
+        if (err.error && err.error.error) {
+          this.toastr.error(err.error.error, 'Error');
+        } else if (err.error && Array.isArray(err.error)) {
           const combinedErrors = err.error.join(', ');
           this.toastr.error(combinedErrors, 'Error');
         } else if (typeof err.error === 'string') {

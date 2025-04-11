@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 export interface UserWithRoles {
   id: string;
@@ -8,18 +9,21 @@ export interface UserWithRoles {
   email: string;
   branchName: string; // Updated property for branch name
   roles: string[];
+  isLockedOut: boolean; // <--- Add this
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://10.10.14.21:4060/api/Auth'; // Adjust as needed
+  private apiUrl = environment.apiUrl; // Adjust as needed
+  private baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
   getUsersWithRoles(): Observable<UserWithRoles[]> {
-    return this.http.get<UserWithRoles[]>(`http://10.10.14.21:4060/api/User/list`);
+    return this.http.get<UserWithRoles[]>(`${this.apiUrl}/User/list`);
+
   }
   // NEW METHOD: Reset user password to default ("Gbe@1234")
   resetUserPassword(userId: string): Observable<any> {
@@ -29,6 +33,9 @@ export class UserService {
   // NEW METHOD: Lock user account
   lockUserAccount(userId: string): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/lock-user/${userId}`, {});
+  }
+  unlockUserAccount(userId: string): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/unlock-user/${userId}`, {});
   }
   // Change Password
   // In auth.service.ts

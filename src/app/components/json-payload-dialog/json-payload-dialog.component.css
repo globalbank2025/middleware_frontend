@@ -19,10 +19,39 @@
     overflow-x: auto;
     font-family: 'Courier New', monospace;
   }
+  .data-view {
+    background: #f9f9f9;
+    padding: 16px;
+    border-radius: 4px;
+    overflow: auto;            /* enable scrolling */
+    white-space: pre-wrap;     /* preserve new lines and wrap long text */
+    font-family: 'Courier New', monospace;
+    max-height: 500px;         /* adjust as needed */
+  }
+  
   
   /* Make the Close button right-aligned */
   mat-card-actions {
     display: flex;
     justify-content: flex-end;
   }
-  
+  @keyframes dialogZoomIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Override Angular Material dialog container styles */
+::ng-deep .mat-dialog-container {
+  animation: dialogZoomIn 0.3s ease-out;
+  margin: 6px !important; /* ensure spacing from viewport edges */
+  max-width: calc(100vw - 32px) !important;  /* leave 16px on both sides */
+  max-height: calc(100vh - 32px) !important; /* leave 16px on top and bottom */
+  box-sizing: border-box;
+  overflow: auto; /* allow scrolling if content overflows */
+}

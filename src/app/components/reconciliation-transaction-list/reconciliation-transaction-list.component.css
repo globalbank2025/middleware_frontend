@@ -1,0 +1,20 @@
+.upload-container {
+    display: flex;
+    align-items: center;
+    margin: 16px;
+    gap: 16px;
+  }
+  
+  .search-container {
+    margin: 16px;
+  }
+  
+  .table-container {
+    margin: 16px;
+    overflow-x: auto;
+  }
+  
+  .spacer {
+    flex: 1 1 auto;
+  }
+  

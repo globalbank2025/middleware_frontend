@@ -20,6 +20,7 @@ import { PartnerManagementComponent } from './components/partner-management/part
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { ServiceManagementComponent } from './components/service-management/service-management.component';
 import { ApiCredentialsManagementComponent } from './components/api-credentials-management/api-credentials-management.component';
+import { ReconciliationTransactionListComponent } from './components/reconciliation-transaction-list/reconciliation-transaction-list.component';
 
 const routes: Routes = [
   // If someone hits '/', redirect to '/dashboard'
@@ -52,7 +53,7 @@ const routes: Routes = [
       { path: 'change-password', component: ChangePasswordComponent },
       { path: 'service-management', component: ServiceManagementComponent },
       { path: 'api-credentials-management', component: ApiCredentialsManagementComponent },
-
+      { path: 'reconcilation', component: ReconciliationTransactionListComponent },
 
 
 

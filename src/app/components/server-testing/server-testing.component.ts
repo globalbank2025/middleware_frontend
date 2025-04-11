@@ -7,10 +7,9 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./server-testing.component.css']
 })
 export class ServerTestingComponent {
-  // Example public test URL returning JSON
-  coreBankingUrl: string = 'https://jsonplaceholder.typicode.com/todos/1';
+  // Updated URL: Make sure to include the protocol.
+  coreBankingUrl: string = 'http://10.1.200.153';
 
-  // Another example array of test URLs
   thirdPartyUrls: string[] = [
     'https://jsonplaceholder.typicode.com/posts/1',
     'https://jsonplaceholder.typicode.com/comments/1'

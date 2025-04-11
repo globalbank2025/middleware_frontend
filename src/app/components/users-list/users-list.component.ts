@@ -12,7 +12,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class UsersListComponent implements OnInit {
   // Removed 'id' and added 'actions'
-  displayedColumns: string[] = ['userName', 'email', 'branchName', 'roles', 'actions'];
+  displayedColumns: string[] = ['userName', 'email', 'branchName', 'roles', 'lockStatus', 'actions'];
+  //displayedColumns: string[] = ['userName', 'email', 'branchName', 'roles', 'actions'];
   dataSource = new MatTableDataSource<UserWithRoles>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -55,14 +56,60 @@ export class UsersListComponent implements OnInit {
   onLockUser(user: UserWithRoles): void {
     if (confirm(`Lock the account for ${user.userName}?`)) {
       this.userService.lockUserAccount(user.id).subscribe({
-        next: res => {
-          this.toastr.success('User account locked.', 'Success');
+        next: (res) => {
+          if (res && res.success) {
+            this.toastr.success(res.message, 'Success');
+            // Immediately reflect lock status in the UI:
+            user.isLockedOut = true;
+          } else {
+            this.toastr.error('Failed to lock account.', 'Error');
+          }
         },
-        error: err => {
-          console.error('Error locking user account', err);
-          this.toastr.error('Failed to lock account.', 'Error');
-        }
+        error: (err) => {
+          if (err.error && err.error.errors) {
+            const errorMessages = Array.isArray(err.error.errors)
+              ? err.error.errors.join(', ')
+              : err.error.errors;
+            this.toastr.error(errorMessages, 'Error');
+          } else if (err.error && err.error.message) {
+            this.toastr.error(err.error.message, 'Error');
+          } else {
+            this.toastr.error('Failed to lock account.', 'Error');
+          }
+        },
       });
     }
   }
+  
+
+  onUnlockUser(user: UserWithRoles): void {
+    if (confirm(`Unlock the account for ${user.userName}?`)) {
+      this.userService.unlockUserAccount(user.id).subscribe({
+        next: (res) => {
+          if (res && res.success) {
+            this.toastr.success(res.message, 'Success');
+            // Update the local UI
+            user.isLockedOut = false;
+          } else {
+            this.toastr.error('Failed to unlock account.', 'Error');
+          }
+        },
+        error: (err) => {
+          if (err.error && err.error.errors) {
+            const errorMessages = Array.isArray(err.error.errors)
+              ? err.error.errors.join(', ')
+              : err.error.errors;
+            this.toastr.error(errorMessages, 'Error');
+          } else if (err.error && err.error.message) {
+            this.toastr.error(err.error.message, 'Error');
+          } else {
+            this.toastr.error('Failed to unlock account.', 'Error');
+          }
+        },
+      });
+    }
+  }
+  
+  
+  
 }

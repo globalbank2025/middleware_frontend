@@ -28,19 +28,33 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
+    // Prevent submission if invalid
     if (this.loginForm.invalid) return;
-
+  
     const { email, password } = this.loginForm.value;
     this.authService.login(email, password).subscribe({
       next: (res: LoginResponse) => {
+        // Handle success
         localStorage.setItem('auth_token', res.token);
         localStorage.setItem('loginResponse', JSON.stringify(res));
         this.toastr.success('Login successful!', 'Success');
         this.router.navigate(['/dashboard']);
       },
-      error: (_err: any) => {
-        this.toastr.error('Invalid email or password.', 'Login Failed');
+      error: (err) => {
+        /*
+          For a response like:
+          HTTP 401
+          body: { "error": "User is locked out." }
+        */
+        if (err.error && err.error.error) {
+          // Show the exact message from server
+          this.toastr.error(err.error.error, 'Login Failed');
+        } else {
+          // Fallback message
+          this.toastr.error('Invalid email or password.', 'Login Failed');
+        }
       }
     });
   }
+  
 }

@@ -1,0 +1,73 @@
+<mat-card class="detail-card">
+    <mat-card-header>
+      <mat-card-title>Transaction Details</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <table>
+        <tr>
+          <td><strong>Issuer Bank:</strong></td>
+          <td>{{ data.transaction.issuerBank }}</td>
+        </tr>
+        <tr>
+          <td><strong>Acquirer Bank:</strong></td>
+          <td>{{ data.transaction.acquirerBank }}</td>
+        </tr>
+        <tr>
+          <td><strong>Message Type:</strong></td>
+          <td>{{ data.transaction.messageTypeIdentifier }}</td>
+        </tr>
+        <tr>
+          <td><strong>Masked Card Number:</strong></td>
+          <td>{{ data.transaction.maskedCardNumber }}</td>
+        </tr>
+        <tr>
+          <td><strong>Transaction Amount:</strong></td>
+          <td>{{ data.transaction.transactionAmount | currency:data.transaction.currencyCode }}</td>
+        </tr>
+        <tr>
+          <td><strong>Currency Code:</strong></td>
+          <td>{{ data.transaction.currencyCode }}</td>
+        </tr>
+        <tr>
+          <td><strong>Transaction Date/Time:</strong></td>
+          <td>{{ data.transaction.transactionDateTime | date:'short' }}</td>
+        </tr>
+        <tr>
+          <td><strong>Description:</strong></td>
+          <td>{{ data.transaction.transactionDescription }}</td>
+        </tr>
+        <tr>
+          <td><strong>Terminal Id:</strong></td>
+          <td>{{ data.transaction.terminalId }}</td>
+        </tr>
+        <tr>
+          <td><strong>Transaction Location:</strong></td>
+          <td>{{ data.transaction.transactionLocation }}</td>
+        </tr>
+        <tr>
+          <td><strong>System Trace Audit Number:</strong></td>
+          <td>{{ data.transaction.systemTraceAuditNumber }}</td>
+        </tr>
+        <tr>
+          <td><strong>Reference Number:</strong></td>
+          <td>{{ data.transaction.referenceNumber }}</td>
+        </tr>
+        <tr>
+          <td><strong>Auth Response Code:</strong></td>
+          <td>{{ data.transaction.authResponseCode }}</td>
+        </tr>
+        <tr>
+          <td><strong>Frontend UTRN No:</strong></td>
+          <td>{{ data.transaction.frontendUtrnNo }}</td>
+        </tr>
+        <tr>
+          <td><strong>Backend UTRN No:</strong></td>
+          <td>{{ data.transaction.backendUtrnNo }}</td>
+        </tr>
+      </table>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="close()">Close</button>
+    </mat-card-actions>
+  </mat-card>
+  

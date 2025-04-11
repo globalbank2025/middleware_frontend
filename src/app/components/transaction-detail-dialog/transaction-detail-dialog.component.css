@@ -1,0 +1,29 @@
+.detail-card {
+    max-width: 800px;
+    margin: 16px auto;
+  }
+  
+  .mat-card-header {
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .mat-card-title {
+    font-weight: 600;
+    font-size: 18px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  td {
+    padding: 8px;
+    vertical-align: top;
+  }
+  
+  td:first-child {
+    font-weight: 600;
+    width: 200px;
+  }
+  

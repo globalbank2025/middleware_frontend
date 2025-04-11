@@ -1,53 +1,49 @@
 <mat-card class="mb-3">
-    <mat-card-title>Server Testing</mat-card-title>
-    <mat-card-content>
-  
-      <!-- Ping Core Banking -->
-      <div class="row">
-        <div class="col">
-          <button mat-raised-button color="primary" (click)="pingCoreBanking()">
-            Ping Core Banking
-          </button>
-        </div>
-        <div class="col">
-          <!-- Core Banking Status with conditional color -->
-          <span *ngIf="coreBankingStatus" 
-                [ngClass]="{
-                  'status-online': coreBankingStatus === 'Online',
-                  'status-offline': coreBankingStatus !== 'Online'
-                }">
-            <strong>Core Banking Status:</strong> {{ coreBankingStatus }}
-          </span>
-        </div>
+  <mat-card-title>Server Testing</mat-card-title>
+  <mat-card-content>
+    <!-- Ping Core Banking -->
+    <div class="row">
+      <div class="col">
+        <button mat-raised-button color="primary" (click)="pingCoreBanking()">
+          Ping Core Banking
+        </button>
       </div>
-  
-      <hr />
-  
-      <!-- Ping Third Parties -->
-      <div class="row">
-        <div class="col">
-          <button mat-raised-button color="accent" (click)="pingThirdParties()">
-            Ping 3rd Parties
-          </button>
-        </div>
+      <div class="col">
+        <span *ngIf="coreBankingStatus" 
+              [ngClass]="{
+                'status-online': coreBankingStatus === 'Online',
+                'status-offline': coreBankingStatus !== 'Online'
+              }">
+          <strong>Core Banking Status:</strong> {{ coreBankingStatus }}
+        </span>
       </div>
-  
-      <div class="row" style="margin-top: 1rem;">
-        <div class="col" *ngFor="let url of thirdPartyUrls">
-          <mat-card class="p-2" style="margin-bottom: 1rem;">
-            <p><strong>{{ url }}</strong></p>
-            <!-- For each URL's status, apply conditional classes. -->
-            <p *ngIf="thirdPartyStatuses[url]"
-               [ngClass]="{
-                 'status-online': thirdPartyStatuses[url] === 'Online',
-                 'status-offline': thirdPartyStatuses[url] !== 'Online'
-               }">
-              Status: {{ thirdPartyStatuses[url] }}
-            </p>
-          </mat-card>
-        </div>
+    </div>
+
+    <hr />
+
+    <!-- Ping Third Parties -->
+    <div class="row">
+      <div class="col">
+        <button mat-raised-button color="accent" (click)="pingThirdParties()">
+          Ping 3rd Parties
+        </button>
       </div>
-  
-    </mat-card-content>
-  </mat-card>
-  
+    </div>
+
+    <div class="row" style="margin-top: 1rem;">
+      <div class="col" *ngFor="let url of thirdPartyUrls">
+        <mat-card class="p-2" style="margin-bottom: 1rem;">
+          <p><strong>{{ url }}</strong></p>
+          <p *ngIf="thirdPartyStatuses[url]"
+             [ngClass]="{
+               'status-online': thirdPartyStatuses[url] === 'Online',
+               'status-offline': thirdPartyStatuses[url] !== 'Online'
+             }">
+            Status: {{ thirdPartyStatuses[url] }}
+          </p>
+        </mat-card>
+      </div>
+    </div>
+
+  </mat-card-content>
+</mat-card>

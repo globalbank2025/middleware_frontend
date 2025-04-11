@@ -2,12 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiCredentials } from '../models/api-credentials.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiCredentialsService {
-  private baseUrl = 'http://10.10.14.21:4060/api/ApiCredentials'; // Adjust to match your API
+  //private baseUrl = 'https://localhost:7033/api/ApiCredentials'; // Adjust to match your API
+  private baseUrl = `${environment.apiUrl}/ApiCredentials`;
+
 
   constructor(private http: HttpClient) { }
 

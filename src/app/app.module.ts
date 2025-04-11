@@ -46,7 +46,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { PartnerManagementComponent } from './components/partner-management/partner-management.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { ServiceManagementComponent } from './components/service-management/service-management.component';
-import { ApiCredentialsManagementComponent } from './components/api-credentials-management/api-credentials-management.component';     // <-- Importing Icons
+import { ApiCredentialsManagementComponent } from './components/api-credentials-management/api-credentials-management.component';
+import { ReconciliationTransactionListComponent } from './components/reconciliation-transaction-list/reconciliation-transaction-list.component';
+import { TransactionDetailDialogComponent } from './components/transaction-detail-dialog/transaction-detail-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -70,6 +72,8 @@ import { ApiCredentialsManagementComponent } from './components/api-credentials-
     ChangePasswordComponent,
     ServiceManagementComponent,
     ApiCredentialsManagementComponent,
+    ReconciliationTransactionListComponent,
+    TransactionDetailDialogComponent,
   ],
   imports: [
     BrowserModule,

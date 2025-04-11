@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 // Example model interface for transaction logs
 export interface TransactionLog {
@@ -22,7 +23,8 @@ export interface TransactionLog {
 })
 export class TransactionLogService {
   // Ideally, read this from environment.ts
-  private readonly baseUrl = 'http://10.10.14.21:4060/api'; 
+  //private readonly baseUrl = 'https://localhost:7033/api'; 
+  private baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 

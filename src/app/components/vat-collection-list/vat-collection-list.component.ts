@@ -101,7 +101,7 @@ export class VatCollectionListComponent implements OnInit {
           customerVatRegistrationNo: row.customerVatRegistrationNo,
           customerTinNo: row.customerTinNo,
           customerTelephone: row.customerTelephone,
-          transferAmount: row.transferAmount,
+          principalAmount: row.principalAmount, // Use principalAmount from the record
           serviceCharge: row.serviceCharge,
           vatOnServiceCharge: row.vatOnServiceCharge,
           totalAmount: row.totalAmount,
@@ -114,6 +114,7 @@ export class VatCollectionListComponent implements OnInit {
             tel: '251-11-551-11-56'
           }
         };
+        
 
         // 4) Store this invoice data in the InvoiceStateService
         this.invoiceState.setInvoiceData(invoiceData);

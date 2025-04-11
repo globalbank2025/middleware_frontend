@@ -7,6 +7,7 @@ import { tap } from 'rxjs/operators';
 import { Branch } from '../models/branchs';
 import { Role } from '../models/role';
 import { ServiceIncomeGl } from '../models/service-income-gl';
+import { environment } from 'src/environments/environment';
 
 /**
  * Represents the structure of the login response from the backend.
@@ -75,7 +76,8 @@ export interface PermissionDto {
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = 'http://10.10.14.21:4060/api'; // Adjust to your actual API base
+  private baseUrl = environment.apiUrl;
+  //private baseUrl = 'https://localhost:7033/api'; // Adjust to your actual API base
   private tokenKey = 'auth_token';
 
   private currentUserSubject = new BehaviorSubject<any>(null);

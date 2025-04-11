@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 export interface CustomerAccountResponse {
   customerName: string;
@@ -47,7 +48,8 @@ export interface VatCollectionTransactionDto {
 
 @Injectable({ providedIn: 'root' })
 export class VatCollectionService {
-  private apiBaseUrl = 'http://10.10.14.21:4060/api';
+  private apiBaseUrl = environment.apiUrl;
+  private baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 

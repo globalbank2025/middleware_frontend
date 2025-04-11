@@ -93,9 +93,20 @@ export class ServiceManagementComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  // Sets the offsetAccNo field to "OnQuery"
+  setOnQuery(): void {
+    this.serviceForm.get('offsetAccNo')?.setValue('OnQuery');
+  }
+
   saveDialog(): void {
     if (this.serviceForm.invalid) return;
+    // Get the form data as a Service object
     const formData = this.serviceForm.value as Service;
+
+    // If this is a new service (not an edit), remove the serviceId property so that it is not sent as null.
+    if (!this.isEdit) {
+      delete formData.serviceId;
+    }
 
     if (this.isEdit) {
       this.serviceService.updateService(this.editServiceId, formData).subscribe({
